@@ -1,0 +1,8 @@
+.course {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.course-list__list {
+  overflow-x: scroll;
+}
