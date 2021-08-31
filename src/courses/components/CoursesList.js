@@ -21,6 +21,7 @@ const CoursesList = (props) => {
         <CourseItem
           key={course.courseId}
           id={course.courseId}
+          subjects={course.subjects}
           //image={course.image}
           name={course.courseName}
         />

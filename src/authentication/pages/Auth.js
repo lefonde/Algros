@@ -16,6 +16,7 @@ import { AuthContext } from "../../shared/context/auth-context";
 import "./Auth.css";
 
 const Auth = () => {
+  const DEBUG = false;
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(false);
   const [userError, setUserError] = useState();
@@ -67,6 +68,11 @@ const Auth = () => {
     event.preventDefault();
     console.log(formState.inputs);
 
+    if(DEBUG) {
+      auth.login();
+      return;
+    }
+
     if (isLoginMode) {
       try {
         const loginResponseData = await sendRequest(
@@ -74,7 +80,7 @@ const Auth = () => {
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
-            userName: "test2",
+            userName: formState.inputs.name.value,
             password: formState.inputs.password.value,
           }),
           {}
@@ -88,7 +94,7 @@ const Auth = () => {
         } else {
           auth.login();
         }
-      } catch (err) {}
+      } catch (err) { }
     } else {
       try {
         const signUpResponseData = await sendRequest(
@@ -109,7 +115,7 @@ const Auth = () => {
         } else {
           auth.login();
         }
-      } catch (err) {}
+      } catch (err) { }
     }
   };
 
@@ -124,17 +130,15 @@ const Auth = () => {
       <Card className="authentication">
         <h2>Just a moment and you're in</h2>
         <form onSubmit={authSubmitHandler}>
-          {!isLoginMode && (
-            <Input
-              element="input"
-              id="name"
-              type="text"
-              placeholder="name"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter your name."
-              onInput={inputHandler}
-            />
-          )}
+          <Input
+            element="input"
+            id="name"
+            type="text"
+            placeholder="name"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter your name."
+            onInput={inputHandler}
+          />
           <Input
             element="input"
             id="email"

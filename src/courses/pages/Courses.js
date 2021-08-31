@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ScrollArea from "react-scrollbar";
 
-import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import CoursesList from "../components/CoursesList";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
@@ -11,8 +11,9 @@ import "./Courses.css";
 const Courses = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedAllCourses, setLoadedAllCourses] = useState([]);
-
   const [loadedUserCourses, setLoadedUserCourses] = useState([]);
+
+  const DEBUG = false;
 
   useEffect(() => {
     document.body.style.background =
@@ -21,6 +22,16 @@ const Courses = () => {
     document.body.style.height = "100%";
     document.body.style.margin = "0";
     document.body.style.backgroundAttachment = "fixed";
+
+    if (DEBUG) {
+      const testCourses = {
+        1: { courseName: "sum course", subjects: "base, array", courseId: 1 },
+        2: { courseName: "squre course", subjects: "base", courseId: 2 },
+      };
+
+      setLoadedAllCourses(testCourses);
+      return;
+    }
 
     const fetchAllCourses = async () => {
       try {
@@ -53,15 +64,15 @@ const Courses = () => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      {isLoading && (
+      {(isLoading || !DEBUG) && (
         <div className="center">
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && (
+      {(!isLoading || DEBUG) && (
         <CoursesList items={loadedUserCourses} className="course-list__list" />
       )}
-      {!isLoading && (
+      {(!isLoading || DEBUG) && (
         <CoursesList items={loadedAllCourses} className="course-list__list" />
       )}
     </React.Fragment>
