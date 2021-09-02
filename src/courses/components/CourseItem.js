@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import Triangle from "./triangle.svg";
 import {} from "@material-ui/core";
+
 //import { Link } from "react-router-dom";
 
 import Card from "../../shared/components/UIElements/Card";
 import Modal from "../../shared/components/UIElements/Modal";
 import Button from "../../shared/components/FormElements/Button";
+import { AuthContext } from "../../shared/context/auth-context";
 
 import "./CourseItem.css";
 
 const CourseItem = (props) => {
+
   const [showCourseDetails, setShowMap] = useState(false);
 
   const openProblemsListHandler = () => setShowMap(true);
@@ -26,7 +29,7 @@ const CourseItem = (props) => {
         footerClass="course-item__modal-actions"
         footer={
           <React.Fragment>
-            <Button to="/problem">START</Button>
+            <Button to={"/courses/" + props.id +"/course"}>START</Button>
             <Button onClick={closeProblemsListHandler}>CLOSE</Button>
           </React.Fragment>
         }

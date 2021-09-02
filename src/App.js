@@ -15,13 +15,16 @@ import { AuthContext } from "./shared/context/auth-context";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(-1);
 
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     setIsLoggedIn(true);
+    setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUserId(null);
   }, []);
 
   let routes;
@@ -29,16 +32,18 @@ const App = () => {
   if (isLoggedIn) {
     routes = (
       <Switch>
-        <Route path="/courses">
+        <Route path="/courses" exact>
           <Courses />
         </Route>
-        <Route path="/courses/course">Your course</Route>
+        <Route path="/courses/:courseId/course">
+          <Problem />
+        </Route>
         <Route path="/user">Your users page</Route>
         <Route path="/about">about</Route>
         <Route path="/intro">intro</Route>
-        <Route path="/problem">
+        {/* <Route path="/problem">
           <Problem />
-        </Route>
+        </Route> */}
         <Redirect to="/courses" />
       </Switch>
     );
@@ -50,12 +55,15 @@ const App = () => {
         </Route>
         <Route path="/about">about</Route>
         <Route path="/intro">intro</Route>
+        <Route path="/courses/:courseId/course">
+          <Problem />
+        </Route>
         <Route path="/auth">
           <Auth />
         </Route>
-        <Route path="/problem">
+        {/* <Route path="/problem">
           <Problem />
-        </Route>
+        </Route> */}
         <Redirect to="/" />
       </Switch>
     );
@@ -63,7 +71,12 @@ const App = () => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{
+        isLoggedIn: isLoggedIn,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
     >
       <Router>
         <MainNavigation />

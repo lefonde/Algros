@@ -68,8 +68,8 @@ const Auth = () => {
     event.preventDefault();
     console.log(formState.inputs);
 
-    if(DEBUG) {
-      auth.login();
+    if (DEBUG) {
+      auth.login(1);
       return;
     }
 
@@ -85,16 +85,15 @@ const Auth = () => {
           }),
           {}
         );
-
-        console.log(loginResponseData);
-
+        console.log("loginResponseData.userId");
+        console.log(loginResponseData.userId);
 
         if (loginResponseData.userId === -1) {
           setUserError("username or password is incorrect.");
         } else {
-          auth.login();
+          auth.login(loginResponseData.userId);
         }
-      } catch (err) { }
+      } catch (err) {}
     } else {
       try {
         const signUpResponseData = await sendRequest(
@@ -108,14 +107,15 @@ const Auth = () => {
           {}
         );
 
-        console.log(signUpResponseData);
+        console.log("signUpResponseData.userId");
+        console.log(signUpResponseData.userId);
 
         if (signUpResponseData.userId === -1) {
           setUserError("user already exists.");
         } else {
-          auth.login();
+          auth.login(signUpResponseData.userId);
         }
-      } catch (err) { }
+      } catch (err) {}
     }
   };
 

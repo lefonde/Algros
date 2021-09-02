@@ -2,45 +2,60 @@ import React, { useEffect, useState } from "react";
 
 import Card from "../../shared/components/UIElements/Card";
 import Tab from "../../shared/components/Navigation/Tabs";
+import Button from "../../shared/components/FormElements/Button";
 
-const Question = (props) => {
+let lastQuestionIndex = 0;
+const Question = props => {
   const [loadedQuestions, setloadedQuestions] = useState([]);
-  const [loadedQuestionIndex, setloadedQuestionIndex] = useState();
+  const [loadedQuestionIndex, setloadedQuestionIndex] = useState(0);
+  const [questionBody, setQuestionBody] = useState("");
+  const [questionName, setQuestionName] = useState("");
   const [loadedTabContent, setloadedTabContent] = useState([]);
 
+  let messages = [];
+  if (
+    props.questions.length !== 0 &&
+    props.index &&
+    props.messages.length !== 0
+  ) {
+    
+    messages = props.messages;
+  }
 
   useEffect(() => {
-    setloadedQuestions(props.questions);
-    setloadedQuestionIndex(props.index);
 
+    if(props.index !== null && Object.keys(props.questions).length !== 0) {
+      setloadedQuestionIndex(props.index);
+      setloadedQuestions(props.questions)
+      setQuestionBody(props.questions[props.index].questionBody)
+      setQuestionName(props.questions[props.index].questionName)
+      lastQuestionIndex = Object.keys(props.questions).length;
+    }
+  }, [props]);
 
-    setloadedTabContent([
-        {
-          title: "Question",
-          content: (
-            <div>
-              <h1>{loadedQuestions[loadedQuestionIndex].questionName}</h1>
-              <p>{loadedQuestions[loadedQuestionIndex].questionBody}</p>
-            </div>
-          ),
-        },
-        {
-          title: "Forum",
-          content: "I've made you more content",
-        },
-      ]);
-  }, []);
+  const nextButtonHandler = () => {
+    props.onIndexChange(loadedQuestionIndex + 1);
+  }
 
-  //   const tabContent = [
-  //     {
-  //       title: "Question",
-  //       content: "I've made you some content",
-  //     },
-  //     {
-  //       title: "Forum",
-  //       content: "I've made you more content",
-  //     },
-  //   ];
+  const prevButtonHandler = () => {
+    props.onIndexChange(loadedQuestionIndex - 1);
+  }
+
+  let tabContent = [
+    {
+      title: "Question",
+      content: (
+        <div>
+          <h1>{questionName}</h1>
+          <p>{questionBody}</p>
+        </div>
+      ),
+    },
+    {
+      title: "Forum",
+      content: "messages",
+    },
+  ];
 
   if (!props.questions || props.questions.length === 0) {
     return (
@@ -58,7 +73,7 @@ const Question = (props) => {
         <div className="col text-center">
           <div className="row text-left">
             <Tab>
-              {loadedTabContent.map((tab, idx) => (
+              {tabContent.map((tab, idx) => (
                 <Tab.TabPane key={`Tab-${idx}`} tab={tab.title}>
                   {tab.content}
                 </Tab.TabPane>
@@ -67,8 +82,8 @@ const Question = (props) => {
           </div>
         </div>
       </div>
-      <h1>{props.questions[props.index].questionName}</h1>
-      <p>{props.questions[props.index].questionBody}</p>
+      <Button type="button" disabled={loadedQuestionIndex === 1} onClick={prevButtonHandler}>Prev</Button>
+      <Button type="button" disabled={loadedQuestionIndex === lastQuestionIndex} onClick={nextButtonHandler}>Next</Button>
     </React.Fragment>
   );
 };
