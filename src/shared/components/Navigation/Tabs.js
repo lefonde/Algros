@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "./Tabs.css";
 
-const Tab = ({children, active = 0}) => {
+const Tab = ({ children, active = 0 }) => {
   const [activeTab, setActiveTab] = useState(active);
   const [tabsData, setTabsData] = useState([]);
 
@@ -13,9 +13,9 @@ const Tab = ({children, active = 0}) => {
       if (!React.isValidElement(element)) return;
 
       const {
-        props: { tab, children },
+        props: { tab, onTabSelected, children },
       } = element;
-      data.push({ tab, children });
+      data.push({ tab, onTabSelected, children });
     });
 
     setTabsData(data);
@@ -29,7 +29,10 @@ const Tab = ({children, active = 0}) => {
             <a
               className={`nav-link ${idx === activeTab ? "active" : ""}`}
               href="#"
-              onClick={() => setActiveTab(idx)}
+              onClick={() => {
+                setActiveTab(idx);
+                tabsData[idx].onTabSelected()
+              }}
             >
               {tab}
             </a>
@@ -37,7 +40,7 @@ const Tab = ({children, active = 0}) => {
         ))}
 
         <div className="tab-content p-3">
-            {tabsData[activeTab] && tabsData[activeTab].children}
+          {tabsData[activeTab] && tabsData[activeTab].children}
         </div>
       </ul>
     </div>

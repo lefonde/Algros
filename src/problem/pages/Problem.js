@@ -69,6 +69,7 @@ const Problem = () => {
       console.log(forumMessages);
       return;
     }
+    
     const fetchQuestions = async () => {
       try {
         console.log("sending request");
@@ -98,6 +99,9 @@ const Problem = () => {
         );
         setforumMessages(forumMessagesResponse.messages);
         console.log(forumMessagesResponse.messages);
+        Object.values(forumMessagesResponse.messages).map(message => {
+          console.log(message);
+        })
       } catch (err) {}
     };
 

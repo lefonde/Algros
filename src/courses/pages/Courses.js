@@ -15,7 +15,7 @@ const Courses = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedAllCourses, setLoadedAllCourses] = useState([]);
   const [loadedUserCourses, setLoadedUserCourses] = useState([]);
-
+  let allCourses = [];
 
   useEffect(() => {
     document.body.style.background =
@@ -42,6 +42,7 @@ const Courses = () => {
         );
         console.log(allCoursesResponse);
         setLoadedAllCourses(allCoursesResponse.courses);
+        allCourses = allCoursesResponse.courses;
       } catch (err) {}
     };
 
@@ -51,16 +52,32 @@ const Courses = () => {
           "http://51.138.73.135:8080/Algors/userCourses",
           "POST",
           JSON.stringify({
-            userId: auth.userId.toString(),
+            userId: "50",
           }),
           {}
         );
-        setLoadedUserCourses(userCoursesResponse.courses);
+
+        let userCoursesIds = [];
+        Object.values(userCoursesResponse.userCourses).map((course) => {
+          userCoursesIds.push(course.courseId);
+        });
+
+        let test = [];
+        Object.values(allCourses).map((course, idx) => {
+          if (userCoursesIds.includes(course.courseId)) test.push(course);
+        });
+        setLoadedUserCourses(test);
       } catch (err) {}
     };
 
-    fetchUserCourses();
     fetchAllCourses();
+    fetchUserCourses();
+
+    // let userCourses = [];
+    // Object.values(loadedUserCourses).map((course, idx) => {
+    //   console.log("loadedAllCourses[course.courseId]")
+    //   console.log(loadedAllCourses[course.courseId])
+    // })
   }, [sendRequest]);
 
   return (

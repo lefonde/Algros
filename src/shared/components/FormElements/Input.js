@@ -24,7 +24,6 @@ const inputReducer = (state, action) => {
 };
 
 const Input = (props) => {
-
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue || "",
     isTouched: false,
@@ -45,7 +44,6 @@ const Input = (props) => {
       validators: props.validators,
     });
   };
-
 
   const touchHandler = () => {
     dispatch({
@@ -72,6 +70,9 @@ const Input = (props) => {
         padding={15}
         style={{
           fontSize: 12,
+          width: "100%",
+          height: "100%",
+          minHeight:"1000px",
           backgroundColor: "#f5f5f5",
           fontFamily:
             "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",

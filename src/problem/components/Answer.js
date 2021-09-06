@@ -71,10 +71,9 @@ const Answer = (props) => {
   return (
     <form onSubmit={authSubmitHandler}>
       <Input
-        className="codeare"
+        className="codearea"
         id="answer"
         element="codearea"
-        label="Your answer:"
         validators={[VALIDATOR_MINLENGTH(3)]}
         errorText="Please enter a valid code answer"
         placeholder="test placeholder"

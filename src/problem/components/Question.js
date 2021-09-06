@@ -3,43 +3,94 @@ import React, { useEffect, useState } from "react";
 import Card from "../../shared/components/UIElements/Card";
 import Tab from "../../shared/components/Navigation/Tabs";
 import Button from "../../shared/components/FormElements/Button";
+import Modal from "../../shared/components/UIElements/Modal";
+import Input from "../../shared/components/FormElements/Input";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useForm } from "../../shared/hooks/form-hooks";
+import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 
 let lastQuestionIndex = 0;
-const Question = props => {
+const Question = (props) => {
   const [loadedQuestions, setloadedQuestions] = useState([]);
   const [loadedQuestionIndex, setloadedQuestionIndex] = useState(0);
   const [questionBody, setQuestionBody] = useState("");
   const [questionName, setQuestionName] = useState("");
-  const [loadedTabContent, setloadedTabContent] = useState([]);
+  const [loadedMessages, setLoadedMessages] = useState([]);
+  const [showForumEntry, setShowForumEntry] = useState(false);
+  const [isForum, setIsForum] = useState(false);
 
-  let messages = [];
-  if (
-    props.questions.length !== 0 &&
-    props.index &&
-    props.messages.length !== 0
-  ) {
-    
-    messages = props.messages;
-  }
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const [formState, inputHandler, setFormData] = useForm(
+    {
+      content: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
+
+  const forumMessageSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      const sentMessageResponse = await sendRequest(
+        "http://51.138.73.135:8080/Algors/sendMessage",
+        "POST",
+        JSON.stringify({
+          questionId: "1",
+          userName: "test14@test.com",
+          body: formState.inputs.content.value,
+        }),
+        {}
+      );
+
+      console.log("sentMessageResponse");
+      console.log(sentMessageResponse);
+    } catch (err) {}
+  };
+
+  // let messages = [];
+  // if (
+  //   props.questions.length !== 0 &&
+  //   props.index &&
+  //   props.messages.length !== 0
+  // ) {
+  //   messages = props.messages;
+  // }
 
   useEffect(() => {
-
-    if(props.index !== null && Object.keys(props.questions).length !== 0) {
+    if (props.index !== null && Object.keys(props.questions).length !== 0) {
       setloadedQuestionIndex(props.index);
-      setloadedQuestions(props.questions)
-      setQuestionBody(props.questions[props.index].questionBody)
-      setQuestionName(props.questions[props.index].questionName)
+      setloadedQuestions(props.questions);
+      setQuestionBody(props.questions[props.index].questionBody);
+      setQuestionName(props.questions[props.index].questionName);
       lastQuestionIndex = Object.keys(props.questions).length;
+    }
+
+    let messages = [];
+    if (Object.keys(props.messages).length !== 0) {
+      Object.values(props.messages).map((message) => {
+        messages.push(<h1>{message.body}</h1>);
+      });
+      setLoadedMessages(messages);
+      console.log("messages:");
+      console.log(messages);
     }
   }, [props]);
 
-  const nextButtonHandler = () => {
-    props.onIndexChange(loadedQuestionIndex + 1);
-  }
+  const nextButtonHandler = () => props.onIndexChange(loadedQuestionIndex + 1);
 
-  const prevButtonHandler = () => {
-    props.onIndexChange(loadedQuestionIndex - 1);
-  }
+  const prevButtonHandler = () => props.onIndexChange(loadedQuestionIndex - 1);
+
+  const openForumEntryHandler = () => setShowForumEntry(true);
+
+  const closeForumEntryHandler = () => setShowForumEntry(false);
+
+  const forumTabHandler = () => setIsForum(true);
+
+  const questionTabHandler = () => setIsForum(false);
 
   let tabContent = [
     {
@@ -53,7 +104,7 @@ const Question = props => {
     },
     {
       title: "Forum",
-      content: "messages",
+      content: <div>{loadedMessages}</div>,
     },
   ];
 
@@ -69,12 +120,56 @@ const Question = props => {
 
   return (
     <React.Fragment>
+      <Modal
+        show={showForumEntry}
+        onCancel={closeForumEntryHandler}
+        header="Course subjects" // change this to courses name
+        contentClass="course-item__modal-content"
+        footerClass="course-item__modal-actions"
+        footer={
+          <React.Fragment>
+            <Button
+              type="button"
+              onClick={forumMessageSubmitHandler}
+              disabled={!formState.isValid}
+            >
+              Submit
+            </Button>
+          </React.Fragment>
+        }
+      >
+        <div className="map-container">
+          <h2>Forum entry form</h2>
+          <form>
+            <Input
+              element="input"
+              id="content"
+              type="text"
+              placeholder="new message content"
+              onInput={inputHandler}
+              validators={[VALIDATOR_REQUIRE()]}
+            />
+          </form>
+        </div>
+      </Modal>
       <div className="row">
         <div className="col text-center">
+          {isForum && (
+            <Button type="button" onClick={openForumEntryHandler}>
+              New
+            </Button>
+          )}
           <div className="row text-left">
             <Tab>
               {tabContent.map((tab, idx) => (
-                <Tab.TabPane key={`Tab-${idx}`} tab={tab.title}>
+                <Tab.TabPane
+                  key={`Tab-${idx}`}
+                  tab={tab.title}
+                  onTabSelected={
+                    idx === 1 ? forumTabHandler : questionTabHandler
+                  }
+                  onTab
+                >
                   {tab.content}
                 </Tab.TabPane>
               ))}
@@ -82,8 +177,20 @@ const Question = props => {
           </div>
         </div>
       </div>
-      <Button type="button" disabled={loadedQuestionIndex === 1} onClick={prevButtonHandler}>Prev</Button>
-      <Button type="button" disabled={loadedQuestionIndex === lastQuestionIndex} onClick={nextButtonHandler}>Next</Button>
+      <Button
+        type="button"
+        disabled={loadedQuestionIndex === 1}
+        onClick={prevButtonHandler}
+      >
+        Prev
+      </Button>
+      <Button
+        type="button"
+        disabled={loadedQuestionIndex === lastQuestionIndex}
+        onClick={nextButtonHandler}
+      >
+        Next
+      </Button>
     </React.Fragment>
   );
 };
