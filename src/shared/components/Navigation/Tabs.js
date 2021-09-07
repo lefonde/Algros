@@ -22,27 +22,27 @@ const Tab = ({ children, active = 0 }) => {
   }, [children]);
 
   return (
-    <div className="w-100">
-      <ul className="nav nav-tabs">
+    <div>
+      <ul className="nav">
         {tabsData.map(({ tab }, idx) => (
-          <li className="nav-item">
-            <a
-              className={`nav-link ${idx === activeTab ? "active" : ""}`}
-              href="#"
-              onClick={() => {
-                setActiveTab(idx);
-                tabsData[idx].onTabSelected()
-              }}
-            >
-              {tab}
-            </a>
-          </li>
+          <div className={`nav-link${idx === activeTab ? "_active" : ""}`}>
+            <li>
+              <a
+                href="#"
+                onClick={() => {
+                  setActiveTab(idx);
+                  tabsData[idx].onTabSelected();
+                }}
+              >
+                {tab}
+              </a>
+            </li>
+          </div>
         ))}
-
-        <div className="tab-content p-3">
-          {tabsData[activeTab] && tabsData[activeTab].children}
-        </div>
       </ul>
+      <div className="tab-content">
+        {tabsData[activeTab] && tabsData[activeTab].children}
+      </div>
     </div>
   );
 };

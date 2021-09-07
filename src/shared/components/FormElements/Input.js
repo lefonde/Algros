@@ -69,10 +69,9 @@ const Input = (props) => {
         onChange={changeHandler}
         padding={15}
         style={{
-          fontSize: 12,
+          fontSize: 18,
           width: "100%",
-          height: "100%",
-          minHeight:"1000px",
+          minHeight:"800px",
           backgroundColor: "#f5f5f5",
           fontFamily:
             "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",

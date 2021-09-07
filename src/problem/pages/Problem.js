@@ -119,6 +119,7 @@ const Problem = () => {
       )}
       <SplitPane split="vertical" minSize={20} defaultSize={700}>
         <Pane initialSize="150px">
+          <div className="left-pane">
           {(!isLoading || DEBUG) && (
             <Question
               questions={loadedQuestions}
@@ -127,6 +128,7 @@ const Problem = () => {
               onIndexChange={updateQuestionIndexHandler}
             />
           )}
+          </div>
         </Pane>
         <Pane initialSize="150px">
           <Answer questionIndex={loadedQuestionIndex} />

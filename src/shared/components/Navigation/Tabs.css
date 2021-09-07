@@ -1,5 +1,45 @@
 .custom-tab .tab-content {
-    min-height: 100px;
-    border: 1px solid #dcdcdc;
-    border-top: none;
-  }
+  border: 1px solid #dcdcdc;
+  border-top: none;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  cursor: pointer;
+  height: 10vh;
+  position: relative;
+  bottom: 34px;
+  
+}
+
+.nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav li {
+  display: flex;
+  text-decoration: none;
+}
+
+.tab-content {
+  text-align: center;
+}
+
+.nav-link {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-link_active {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

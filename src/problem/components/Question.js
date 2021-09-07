@@ -9,6 +9,8 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useForm } from "../../shared/hooks/form-hooks";
 import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 
+import "./Question.css"
+
 let lastQuestionIndex = 0;
 const Question = (props) => {
   const [loadedQuestions, setloadedQuestions] = useState([]);
@@ -50,15 +52,6 @@ const Question = (props) => {
       console.log(sentMessageResponse);
     } catch (err) {}
   };
-
-  // let messages = [];
-  // if (
-  //   props.questions.length !== 0 &&
-  //   props.index &&
-  //   props.messages.length !== 0
-  // ) {
-  //   messages = props.messages;
-  // }
 
   useEffect(() => {
     if (props.index !== null && Object.keys(props.questions).length !== 0) {
@@ -152,45 +145,46 @@ const Question = (props) => {
           </form>
         </div>
       </Modal>
-      <div className="row">
-        <div className="col text-center">
+      <div className="question-content">
+        <div className="tabs">
+          <Tab>
+            {tabContent.map((tab, idx) => (
+              <Tab.TabPane
+                className="tab"
+                key={`Tab-${idx}`}
+                tab={tab.title}
+                onTabSelected={idx === 1 ? forumTabHandler : questionTabHandler}
+                onTab
+              >
+                {tab.content}
+              </Tab.TabPane>
+            ))}
+          </Tab>
+        </div>
+        <div className="forum-new">
           {isForum && (
             <Button type="button" onClick={openForumEntryHandler}>
               New
             </Button>
           )}
-          <div className="row text-left">
-            <Tab>
-              {tabContent.map((tab, idx) => (
-                <Tab.TabPane
-                  key={`Tab-${idx}`}
-                  tab={tab.title}
-                  onTabSelected={
-                    idx === 1 ? forumTabHandler : questionTabHandler
-                  }
-                  onTab
-                >
-                  {tab.content}
-                </Tab.TabPane>
-              ))}
-            </Tab>
-          </div>
         </div>
+        {!isForum && <div className="questions-nav">
+          <Button
+            type="button"
+            disabled={loadedQuestionIndex === 1}
+            onClick={prevButtonHandler}
+          >
+            Prev
+          </Button>
+          <Button
+            type="button"
+            disabled={loadedQuestionIndex === lastQuestionIndex}
+            onClick={nextButtonHandler}
+          >
+            Next
+          </Button>
+        </div>}
       </div>
-      <Button
-        type="button"
-        disabled={loadedQuestionIndex === 1}
-        onClick={prevButtonHandler}
-      >
-        Prev
-      </Button>
-      <Button
-        type="button"
-        disabled={loadedQuestionIndex === lastQuestionIndex}
-        onClick={nextButtonHandler}
-      >
-        Next
-      </Button>
     </React.Fragment>
   );
 };

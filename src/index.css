@@ -5,12 +5,15 @@
 }
 
 html {
+  margin:0px;
+  height:100%;
   font-family: 'Open Sans', sans-serif;
 }
 
 body {
   margin: 0;
-  background: #E2D4B0;
+  height:100%;
+  background: #ffffff;
 }
 
 .slide-in-left-enter {

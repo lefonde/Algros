@@ -1,0 +1,21 @@
+.question-content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.tabs {
+  height: 75vh;
+}
+
+.forum-new {
+    height: 50px;
+}
+
+.questions-nav {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+
+}

@@ -69,28 +69,34 @@ const Answer = (props) => {
   };
 
   return (
-    <form onSubmit={authSubmitHandler}>
-      <Input
-        className="codearea"
-        id="answer"
-        element="codearea"
-        validators={[VALIDATOR_MINLENGTH(3)]}
-        errorText="Please enter a valid code answer"
-        placeholder="test placeholder"
-        onInput={inputHandler}
-        initialValue={codeString}
-        language="js"
-        value={codeString}
-      />
-      <ErrorModal error={error} onClear={clearError} />
-      {isLoading && (
-        <div className="center">
-          <LoadingSpinner />
-        </div>
-      )}
-      <Button type="submit" disabled={formState.isValid}>
-        Submit
-      </Button>
+    <form className="answer-pane" onSubmit={authSubmitHandler}>
+      <div className="codearea">
+        <Input
+          id="answer"
+          element="codearea"
+          validators={[VALIDATOR_MINLENGTH(3)]}
+          errorText="Please enter a valid code answer"
+          placeholder="test placeholder"
+          onInput={inputHandler}
+          initialValue={codeString}
+          language="js"
+          value={codeString}
+        />
+
+        <ErrorModal error={error} onClear={clearError} />
+        {isLoading && (
+          <div className="center">
+            <LoadingSpinner />
+          </div>
+        )}
+      </div>
+        <Button
+          className="item-relative"
+          type="submit"
+          disabled={formState.isValid}
+        >
+          Submit
+        </Button>
       {!isLoading && (
         <label id="result" for="submit">
           {loadedSubmissionResult}
