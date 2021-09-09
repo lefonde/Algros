@@ -12,7 +12,6 @@ import { AuthContext } from "../../shared/context/auth-context";
 import "./CourseItem.css";
 
 const CourseItem = (props) => {
-
   const [showCourseDetails, setShowMap] = useState(false);
 
   const openProblemsListHandler = () => setShowMap(true);
@@ -29,7 +28,7 @@ const CourseItem = (props) => {
         footerClass="course-item__modal-actions"
         footer={
           <React.Fragment>
-            <Button to={"/courses/" + props.id +"/course"}>START</Button>
+            <Button to={"/courses/" + props.id + "/course"}>START</Button>
             <Button onClick={closeProblemsListHandler}>CLOSE</Button>
           </React.Fragment>
         }
@@ -41,7 +40,7 @@ const CourseItem = (props) => {
       </Modal>
 
       <li className="course-item">
-        <Card className="course-item__content">
+        {/* <Card className="course-item__content">
           <div className="course-item__info">
             <div className="course-item__info-item">
               <h2>{props.name}</h2>
@@ -58,7 +57,22 @@ const CourseItem = (props) => {
               </Button>
             </div>
           </div>
-        </Card>
+        </Card> */}
+        <button onClick={openProblemsListHandler}>
+          <Card
+            className={`course-item__info  ${
+              props.all && `course-item__info--all`
+            }  ${props.user && `course-item__info--user`}`}
+          >
+            <h2>{props.name}</h2>
+            {props.user && (
+              <div>
+                <p>{props.questionsAmount} problems</p>
+                <p>{props.completion}</p>
+              </div>
+            )}
+          </Card>
+        </button>
       </li>
     </React.Fragment>
   );

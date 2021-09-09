@@ -9,7 +9,7 @@ const CoursesList = (props) => {
     return (
       <div className="center">
         <Card>
-          <h2>No courses found.</h2>
+          <h2>Once you start a course it will be added here</h2>
         </Card>
       </div>
     );
@@ -22,8 +22,12 @@ const CoursesList = (props) => {
           key={course.courseId}
           id={course.courseId}
           subjects={course.subjects}
+          completion={course.courseCompletion}
+          questionsAmount={course.questionsAmount}
           //image={course.image}
           name={course.courseName}
+          user={props.user}
+          all={props.all}
         />
       ))}
     </ul>

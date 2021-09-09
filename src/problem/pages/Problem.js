@@ -26,6 +26,31 @@ const Problem = () => {
     console.log(newIndex);
   };
 
+
+  useEffect(()=>{
+    const userId = JSON.parse(localStorage.getItem("userData")).userId.toString();
+    const fetchQuestions = async () => {
+      try {
+        const questionsResponse = await sendRequest(
+          "http://51.138.73.135:8080/Algors/questions",
+          "POST",
+          JSON.stringify({
+            userId: userId,
+            courseId: courseId.toString(),
+          }),
+          {}
+        );
+        console.log("questionsResponse");
+        console.log(questionsResponse);
+        setloadedQuestions(questionsResponse.questions);
+        setloadedQuestionIndex(questionsResponse.firstQuestionIndex);
+      } catch (err) {}
+    };
+
+    fetchQuestions();
+
+  },[sendRequest])
+
   useEffect(() => {
     if (DEBUG) {
       const DEBUG_allForumMessages = {
@@ -70,23 +95,6 @@ const Problem = () => {
       return;
     }
     
-    const fetchQuestions = async () => {
-      try {
-        console.log("sending request");
-        const questionsResponse = await sendRequest(
-          "http://51.138.73.135:8080/Algors/questions",
-          "POST",
-          JSON.stringify({
-            userId: auth.userId.toString(),
-            courseId: courseId.toString(),
-          }),
-          {}
-        );
-        setloadedQuestions(questionsResponse.questions);
-        setloadedQuestionIndex(questionsResponse.firstQuestionIndex);
-      } catch (err) {}
-    };
-
     const fetchAllForumMessages = async () => {
       try {
         const forumMessagesResponse = await sendRequest(
@@ -98,16 +106,13 @@ const Problem = () => {
           {}
         );
         setforumMessages(forumMessagesResponse.messages);
-        console.log(forumMessagesResponse.messages);
-        Object.values(forumMessagesResponse.messages).map(message => {
-          console.log(message);
-        })
       } catch (err) {}
     };
 
     fetchAllForumMessages();
-    fetchQuestions();
   }, [sendRequest]);
+
+ 
 
   return (
     <React.Fragment>

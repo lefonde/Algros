@@ -18,67 +18,72 @@ const Courses = () => {
   let allCourses = [];
 
   useEffect(() => {
-    document.body.style.background =
-      "linear-gradient(180deg, #FFFFFF 50%, rgba(226, 211, 175, 0.25) 50%)";
+    document.body.style.background = "#ffffff";
     document.body.style.backgroundRepeat = "no-repeat";
     document.body.style.height = "100%";
     document.body.style.margin = "0";
     document.body.style.backgroundAttachment = "fixed";
+  }, [])
 
-    if (DEBUG) {
-      const testCourses = {
-        1: { courseName: "sum course", subjects: "base, array", courseId: 1 },
-        2: { courseName: "squre course", subjects: "base", courseId: 2 },
-      };
-
-      setLoadedAllCourses(testCourses);
-      return;
-    }
+  useEffect(() => {
 
     const fetchAllCourses = async () => {
       try {
         const allCoursesResponse = await sendRequest(
           "http://51.138.73.135:8080/Algors/allCourses"
         );
-        console.log(allCoursesResponse);
         setLoadedAllCourses(allCoursesResponse.courses);
         allCourses = allCoursesResponse.courses;
       } catch (err) {}
+
     };
+    
+    fetchAllCourses();
+
+  }, [sendRequest])
+
+  useEffect(() => {
 
     const fetchUserCourses = async () => {
       try {
+        const userId = JSON.parse(localStorage.getItem("userData")).userId.toString();
+        console.log("parsed local storage");
+        console.log(userId);
         const userCoursesResponse = await sendRequest(
           "http://51.138.73.135:8080/Algors/userCourses",
           "POST",
           JSON.stringify({
-            userId: "50",
+            userId: userId,
           }),
           {}
         );
 
-        let userCoursesIds = [];
-        Object.values(userCoursesResponse.userCourses).map((course) => {
-          userCoursesIds.push(course.courseId);
-        });
+        console.log("got user courses");
+        console.log(userCoursesResponse);
 
         let test = [];
-        Object.values(allCourses).map((course, idx) => {
-          if (userCoursesIds.includes(course.courseId)) test.push(course);
+        Object.values(loadedAllCourses).map((currentCourse, idx1) => {
+          Object.values(userCoursesResponse.userCourses).map(
+            (userCourse, idx2) => {
+              if (currentCourse.courseId === userCourse.courseId)
+                test.push({
+                  courseId: currentCourse.courseId,
+                  courseName: currentCourse.courseName,
+                  subjects: currentCourse.subjects,
+                  questionsAmount: userCourse.questionAmount,
+                  courseCompletion: `${parseInt((userCourse.questionCompletedAmount / userCourse.questionAmount) * 100)}%`,
+                });
+            }
+          );
         });
+
         setLoadedUserCourses(test);
       } catch (err) {}
     };
 
-    fetchAllCourses();
     fetchUserCourses();
 
-    // let userCourses = [];
-    // Object.values(loadedUserCourses).map((course, idx) => {
-    //   console.log("loadedAllCourses[course.courseId]")
-    //   console.log(loadedAllCourses[course.courseId])
-    // })
-  }, [sendRequest]);
+  }, [sendRequest, loadedAllCourses]);
 
   return (
     <React.Fragment>
@@ -88,12 +93,26 @@ const Courses = () => {
           <LoadingSpinner />
         </div>
       )}
-      {(!isLoading || DEBUG) && (
-        <CoursesList items={loadedUserCourses} className="course-list__list" />
-      )}
-      {(!isLoading || DEBUG) && (
-        <CoursesList items={loadedAllCourses} className="course-list__list" />
-      )}
+      <div className="courses-list_user">
+        <h1>Your courses</h1>
+        {(!isLoading || DEBUG) && (
+          <CoursesList
+            items={loadedUserCourses}
+            className="course-list__list"
+            user
+          />
+        )}
+      </div>
+      <div className="courses-list_all">
+        <h1>All Courses</h1>
+        {(!isLoading || DEBUG) && (
+          <CoursesList
+            items={loadedAllCourses}
+            className="course-list__list"
+            all
+          />
+        )}
+      </div>
     </React.Fragment>
   );
 };

@@ -6,3 +6,42 @@
 .course-list__list {
   overflow-x: scroll;
 }
+
+.courses-list_user {
+  margin: auto;
+  height: 35vh;
+}
+
+.courses-list_all {
+  background: #ff80ba;
+  margin: auto;
+  
+}
+
+.courses-list_user h1 {
+  margin: 0 0 0 0;
+  font-weight: normal;
+  color: rgb(0, 0, 0);
+
+  position: absolute;
+  top: 23%;
+  left: 5%;
+
+  /* position: absolute;
+  left: 20px;
+  top: 50px; */
+}
+
+.courses-list_all h1 {
+  margin: 0 0 0 0;
+  font-weight: normal;
+  color: white;
+
+  position: absolute;
+  top: 50%;
+  left: 5%;
+
+  /* position: absolute;
+  left: 20px;
+  top: 50px; */
+}

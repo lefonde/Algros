@@ -12,15 +12,16 @@ const Home = () => {
   useEffect(() => {
     document.body.style.backgroundImage = `url(${Back1})`
     document.body.style.backgroundRepeat = "no-repeat";
-    document.body.style.height = "100%";
-    document.body.style.width = "100%";
-    document.body.style.margin = "0";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.justifyContent = 'space-around'
+    document.body.style.backgroundSize = "cover"
+    // document.body.style.height = "100vh";
+    // document.body.style.width = "100vh";
+    //document.body.style.margin = "0";
+
   }, []);
 
 
   return (
+    <div className="home-test">
       <li className="home__info">
         <div>
           <h1>Hey you!</h1>
@@ -32,6 +33,8 @@ const Home = () => {
         </div>
         <div></div>
       </li>
+    </div>
+
   );
 };
 

@@ -49,7 +49,7 @@ const MainNavigation = (props) => {
           <NavLinks />
         </nav>
         {!auth.isLoggedIn && (
-          <Button to="/auth">Signup</Button>
+          <Button to="/auth" inverse>Login</Button>
         )}
         {auth.isLoggedIn && (
           <Button onClick={auth.logout}>LOGOUT</Button>
