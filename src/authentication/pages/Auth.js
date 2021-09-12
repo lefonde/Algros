@@ -1,9 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import Card from "../../shared/components/UIElements/Card";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Background from "../components/login-background.svg";
+
 
 import {
   VALIDATOR_EMAIL,
@@ -21,6 +23,16 @@ const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(false);
   const [userError, setUserError] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  useEffect(() => {
+    document.body.style.backgroundImage = `url(${Background})`
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundSize = "cover"
+    // document.body.style.height = "100vh";
+    // document.body.style.width = "100vh";
+    //document.body.style.margin = "0";
+
+  }, []);
 
   const [formState, inputHandler, setFormData] = useForm(
     {

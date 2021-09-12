@@ -102,3 +102,61 @@
     height: 20rem;
   }
 }
+
+.home-computer {
+  position: absolute;
+  top: 148vh;
+  left: 10vh;
+}
+
+.owl-icon {
+  position: absolute;
+  top: 14vh;
+  right: 40vh;
+}
+
+.welcome-text {
+  position: absolute;
+  top: 14vh;
+  left: 20vh;
+}
+
+.welcome-text h1 {
+  font-size:80px;
+}
+
+.welcome-text h2 {
+  font-size:60px;
+}
+
+.goodbye-text {
+  position: absolute;
+  top: 295vh;
+  align-content: center;
+}
+
+.with-friends-text {
+  position: absolute;
+  top: 368vh;
+  right: 5vh;
+}
+
+.with-friends-text h2 {
+  font-size:50px;
+}
+
+.goodbye-text h2 {
+  font-size:60px;
+}
+
+.friends {
+  position: absolute;
+  top: 329vh;
+  left: 0vh;
+}
+
+.create-account {
+  width: 50vh;
+  height: 5vh;
+  font-size: x-large;
+}
