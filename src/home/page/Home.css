@@ -160,3 +160,18 @@
   height: 5vh;
   font-size: x-large;
 }
+
+.home-anchor{
+  position: absolute;
+  top: 0vh;
+}
+
+.intro-anchor {
+  position: absolute;
+  top: 135vh;
+}
+
+.about-anchor {
+  position: absolute;
+  top: 285vh;
+}

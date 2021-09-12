@@ -39,6 +39,9 @@ const Home = () => {
         <div className="friends">
           <img src={Friends} alt="With friends" width="200%" height="200%" />
         </div>
+        <div className="home-anchor" id= "homeAnchorTag"/>
+        <div className="intro-anchor" id= "introAnchorTag"/>
+        <div className="about-anchor" id= "aboutAnchorTag"/>
       </li>
     </div>
   );
