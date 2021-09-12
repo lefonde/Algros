@@ -17,10 +17,14 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(-1);
 
-  const login = useCallback((uid) => {
+  const login = useCallback((uid, user) => {
     setIsLoggedIn(true);
     setUserId(uid);
-    localStorage.setItem("userData", JSON.stringify({ userId: uid }));
+
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ userId: uid, userName: user })
+    );
   }, []);
 
   const logout = useCallback(() => {
@@ -31,10 +35,9 @@ const App = () => {
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userData"));
-    if(storedData) {
-      login(storedData.userId);
+    if (storedData) {
+      login(storedData.userId, storedData.userName);
     }
-
   }, [login]);
 
   let routes;

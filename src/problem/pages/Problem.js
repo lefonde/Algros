@@ -12,23 +12,51 @@ import Question from "../components/Question";
 import "./Problem.css";
 
 const Problem = () => {
-  const courseId = useParams().courseId;
   const DEBUG = false;
+  const courseId = useParams().courseId.toString();
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedMessages, setLoadedMessages] = useState(false);
   const [loadedQuestions, setloadedQuestions] = useState([]);
   const [loadedQuestionIndex, setloadedQuestionIndex] = useState(null);
   const [forumMessages, setforumMessages] = useState([]);
+  let questionIndex = 0;
 
   const updateQuestionIndexHandler = (newIndex) => {
+    questionIndex = newIndex;
     setloadedQuestionIndex(newIndex);
+    fetchAllForumMessages(newIndex);
     console.log("updated question index=");
     console.log(newIndex);
   };
 
+  const fetchAllForumMessages = async (index) => {
+    setLoadedMessages(false);
+    try {
+      const forumMessagesResponse = await sendRequest(
+        "http://51.138.73.135:8080/Algors/allForumMessage",
+        "POST",
+        JSON.stringify({
+          questionId: index.toString(),
+        }),
+        {}
+      );
+      setforumMessages(forumMessagesResponse.messages);
+      setLoadedMessages(true);
+      console.log("forum messages index=");
+      console.log(index);
+    } catch (err) {}
+  };
 
-  useEffect(()=>{
-    const userId = JSON.parse(localStorage.getItem("userData")).userId.toString();
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+  }, []);
+
+  useEffect(() => {
+    const userId = JSON.parse(
+      localStorage.getItem("userData")
+    ).userId.toString();
+
     const fetchQuestions = async () => {
       try {
         const questionsResponse = await sendRequest(
@@ -36,20 +64,20 @@ const Problem = () => {
           "POST",
           JSON.stringify({
             userId: userId,
-            courseId: courseId.toString(),
+            courseId: courseId,
           }),
           {}
         );
         console.log("questionsResponse");
         console.log(questionsResponse);
         setloadedQuestions(questionsResponse.questions);
+        questionIndex = questionsResponse.firstQuestionIndex;
         setloadedQuestionIndex(questionsResponse.firstQuestionIndex);
       } catch (err) {}
     };
 
     fetchQuestions();
-
-  },[sendRequest])
+  }, [sendRequest]);
 
   useEffect(() => {
     if (DEBUG) {
@@ -94,25 +122,9 @@ const Problem = () => {
       console.log(forumMessages);
       return;
     }
-    
-    const fetchAllForumMessages = async () => {
-      try {
-        const forumMessagesResponse = await sendRequest(
-          "http://51.138.73.135:8080/Algors/allForumMessage",
-          "POST",
-          JSON.stringify({
-            questionId: "1",
-          }),
-          {}
-        );
-        setforumMessages(forumMessagesResponse.messages);
-      } catch (err) {}
-    };
 
-    fetchAllForumMessages();
+    fetchAllForumMessages(questionIndex);
   }, [sendRequest]);
-
- 
 
   return (
     <React.Fragment>
@@ -122,23 +134,26 @@ const Problem = () => {
           <LoadingSpinner />
         </div>
       )}
-      <SplitPane split="vertical" minSize={20} defaultSize={700}>
-        <Pane initialSize="150px">
+      <div className="problem">
+        <SplitPane split="vertical" minSize={400} defaultSize={600}>
           <div className="left-pane">
-          {(!isLoading || DEBUG) && (
-            <Question
-              questions={loadedQuestions}
-              index={loadedQuestionIndex}
-              messages={forumMessages}
-              onIndexChange={updateQuestionIndexHandler}
-            />
-          )}
+            <Pane>
+              {!isLoading && loadedMessages && (
+                <Question
+                  questions={loadedQuestions}
+                  index={loadedQuestionIndex}
+                  messages={forumMessages}
+                  onIndexChange={updateQuestionIndexHandler}
+                  onNewForumMessage={fetchAllForumMessages}
+                />
+              )}
+            </Pane>
           </div>
-        </Pane>
-        <Pane initialSize="150px">
-          <Answer questionIndex={loadedQuestionIndex} />
-        </Pane>
-      </SplitPane>
+          <Pane>
+            <Answer questionIndex={loadedQuestionIndex} />
+          </Pane>
+        </SplitPane>
+      </div>
     </React.Fragment>
   );
 };

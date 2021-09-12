@@ -24,6 +24,7 @@ const CourseItem = (props) => {
         show={showCourseDetails}
         onCancel={closeProblemsListHandler}
         header="Course subjects" // change this to courses name
+        headerClass="course-problems-list__modal-header"
         contentClass="course-item__modal-content"
         footerClass="course-item__modal-actions"
         footer={
@@ -34,7 +35,6 @@ const CourseItem = (props) => {
         }
       >
         <div className="map-container">
-          <h2>Subjects</h2>
           <p>{props.subjects}</p>
         </div>
       </Modal>

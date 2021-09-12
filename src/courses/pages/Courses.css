@@ -2,20 +2,21 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100vh;
 }
+
 .course-list__list {
   overflow-x: scroll;
 }
 
 .courses-list_user {
   margin: auto;
-  height: 35vh;
 }
 
 .courses-list_all {
   background: #ff80ba;
-  margin: auto;
-  
+  position: relative;
+  top: 30vh;
 }
 
 .courses-list_user h1 {
@@ -38,10 +39,11 @@
   color: white;
 
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 5%;
 
   /* position: absolute;
   left: 20px;
   top: 50px; */
 }
+

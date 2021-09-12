@@ -9,13 +9,139 @@
 }
 
 .forum-new {
-    height: 50px;
+  height: 50px;
+}
+
+.new-message__modal {
+  width: 185vh;
+  height: 85vh;
+  position: absolute;
+  left: 5vh;
+  top: 5vh;
+  box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+
+  justify-content: center;
+}
+
+.new-message__content {
+  width: 100%;
+  height: 100%;
+  padding: 2vh;
+}
+
+.new-message__content textarea {
+  width: 100%;
+  height: 100%;
+}
+
+.new-message__modal-header {
+  background: #7ac2bb;
+  border-radius: 6px 6px 0 0;
 }
 
 .questions-nav {
   height: 50px;
   display: flex;
   flex-direction: row;
-  justify-content:space-between;
+  justify-content: space-between;
+}
 
+.forum-message__card {
+  width: 60vh;
+  height: 10vh;
+  border: 1.5px solid #7ac2bb;
+  box-sizing: border-box;
+  filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.25));
+  border-radius: 6px;
+  margin: 1vh;
+  padding: 0;
+  background-color: transparent;
+}
+
+.forum-message__card_button {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  padding: 0;
+  background-color: transparent;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.forum-message__card__left {
+  width: 20%;
+  height: 100%;
+  height: 100%;
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.forum-message__card__right {
+  width: 80%;
+  padding: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.forum-message__card__right__top {
+  padding: 1;
+  height: 50%;
+  width: 100%;
+}
+
+.forum-message__card__right__buttom {
+  padding: 1;
+  height: 50%;
+  width: 100%;
+}
+
+.forum-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: 62vh;
+
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.forum-content button {
+  background-color: transparent;
+  border-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.forum-content::-webkit-scrollbar {
+  display: none;
+}
+
+.forum-message__modal {
+  width: 185vh;
+  height: 85vh;
+  position: absolute;
+  left: 5vh;
+  top: 5vh;
+  box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+}
+
+.forum-message__modal-header {
+  background: #7ac2bb;
+  border-radius: 6px 6px 0 0;
+}
+
+.forum-message__modal-content {
+  width: 100%;
+  height: 70vh;
 }

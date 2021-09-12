@@ -23,10 +23,9 @@ const Courses = () => {
     document.body.style.height = "100%";
     document.body.style.margin = "0";
     document.body.style.backgroundAttachment = "fixed";
-  }, [])
+  }, []);
 
   useEffect(() => {
-
     const fetchAllCourses = async () => {
       try {
         const allCoursesResponse = await sendRequest(
@@ -35,18 +34,17 @@ const Courses = () => {
         setLoadedAllCourses(allCoursesResponse.courses);
         allCourses = allCoursesResponse.courses;
       } catch (err) {}
-
     };
-    
-    fetchAllCourses();
 
-  }, [sendRequest])
+    fetchAllCourses();
+  }, [sendRequest]);
 
   useEffect(() => {
-
     const fetchUserCourses = async () => {
       try {
-        const userId = JSON.parse(localStorage.getItem("userData")).userId.toString();
+        const userId = JSON.parse(
+          localStorage.getItem("userData")
+        ).userId.toString();
         console.log("parsed local storage");
         console.log(userId);
         const userCoursesResponse = await sendRequest(
@@ -71,7 +69,11 @@ const Courses = () => {
                   courseName: currentCourse.courseName,
                   subjects: currentCourse.subjects,
                   questionsAmount: userCourse.questionAmount,
-                  courseCompletion: `${parseInt((userCourse.questionCompletedAmount / userCourse.questionAmount) * 100)}%`,
+                  courseCompletion: `${parseInt(
+                    (userCourse.questionCompletedAmount /
+                      userCourse.questionAmount) *
+                      100
+                  )}%`,
                 });
             }
           );
@@ -82,7 +84,6 @@ const Courses = () => {
     };
 
     fetchUserCourses();
-
   }, [sendRequest, loadedAllCourses]);
 
   return (

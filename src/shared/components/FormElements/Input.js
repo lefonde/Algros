@@ -63,15 +63,18 @@ const Input = (props) => {
       />
     ) : props.element === "codearea" ? (
       <CodeEditor
+        id={props.id}
+        type={props.type}
         value={inputState.value}
         language={props.language}
         placeholder={props.placeholder}
         onChange={changeHandler}
+        onBlur={touchHandler}
         padding={15}
         style={{
           fontSize: 18,
           width: "100%",
-          minHeight:"800px",
+          minHeight: "100vh",
           backgroundColor: "#f5f5f5",
           fontFamily:
             "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",

@@ -45,7 +45,10 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
-          name: undefined,
+          name: {
+            value: "",
+            isValid: false,
+          },
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -66,7 +69,6 @@ const Auth = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
 
     if (DEBUG) {
       auth.login(1);
@@ -85,13 +87,11 @@ const Auth = () => {
           }),
           {}
         );
-        console.log("loginResponseData.userId");
-        console.log(loginResponseData.userId);
 
         if (loginResponseData.userId === -1) {
           setUserError("username or password is incorrect.");
         } else {
-          auth.login(loginResponseData.userId);
+          auth.login(loginResponseData.userId, formState.inputs.name.value);
         }
       } catch (err) {}
     } else {
@@ -107,13 +107,11 @@ const Auth = () => {
           {}
         );
 
-        console.log("signUpResponseData.userId");
-        console.log(signUpResponseData.userId);
 
         if (signUpResponseData.userId === -1) {
           setUserError("user already exists.");
         } else {
-          auth.login(signUpResponseData.userId);
+          auth.login(signUpResponseData.userId, formState.inputs.name.value);
         }
       } catch (err) {}
     }

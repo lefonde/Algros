@@ -90,6 +90,7 @@
 
 .course-item__modal-content {
   padding: 0;
+  margin: 10px;
 }
 
 .course-item__modal-actions {
@@ -111,3 +112,9 @@
     height: 20rem;
   }
 }
+
+.course-problems-list__modal-header {
+  background: #7ac2bb;
+  border-radius: 6px 6px 0 0;
+}
+

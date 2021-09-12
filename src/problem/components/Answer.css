@@ -1,6 +1,10 @@
 .codearea {
   margin: 0;
-  height: 80%;
+  height: 75vh;
+  padding: 0;
+
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 .answer-pane {
@@ -10,6 +14,15 @@
 .item-relative {
   position: absolute;
   right: 20px;
+  top: 100px;
 }
+
+.answer-footer {
+  height:25vh;
+  padding: 10px;
+  position: relative;
+  clear: both;
+}
+
 
 
