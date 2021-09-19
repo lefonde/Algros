@@ -15,7 +15,6 @@ import "./Question.css";
 let lastQuestionIndex = 0;
 
 const Question = (props) => {
-  const [loadedQuestions, setloadedQuestions] = useState([]);
   const [loadedQuestionIndex, setloadedQuestionIndex] = useState(0);
   const [questionBody, setQuestionBody] = useState("");
   const [questionName, setQuestionName] = useState("");
@@ -64,9 +63,6 @@ const Question = (props) => {
         }),
         {}
       );
-
-      console.log("sentMessageResponse");
-      console.log(sentMessageResponse);
 
       closeForumEntryHandler();
     } catch (err) {}

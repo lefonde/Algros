@@ -15,8 +15,9 @@
 
 .courses-list_all {
   background: #ff80ba;
-  position: relative;
-  top: 30vh;
+  position: absolute;
+  width: 100%;
+  top: 44vh;
 }
 
 .courses-list_user h1 {
@@ -46,4 +47,3 @@
   left: 20px;
   top: 50px; */
 }
-

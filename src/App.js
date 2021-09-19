@@ -54,9 +54,6 @@ const App = () => {
         <Route path="/user">Your users page</Route>
         <Route path="/about">about</Route>
         <Route path="/intro">intro</Route>
-        {/* <Route path="/problem">
-          <Problem />
-        </Route> */}
         <Redirect to="/courses" />
       </Switch>
     );
@@ -74,9 +71,6 @@ const App = () => {
         <Route path="/auth">
           <Auth />
         </Route>
-        {/* <Route path="/problem">
-          <Problem />
-        </Route> */}
         <Redirect to="/" />
       </Switch>
     );

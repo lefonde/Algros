@@ -1,22 +1,18 @@
 import React, { useState } from "react";
-import Triangle from "./triangle.svg";
 import {} from "@material-ui/core";
-
-//import { Link } from "react-router-dom";
 
 import Card from "../../shared/components/UIElements/Card";
 import Modal from "../../shared/components/UIElements/Modal";
 import Button from "../../shared/components/FormElements/Button";
-import { AuthContext } from "../../shared/context/auth-context";
 
 import "./CourseItem.css";
 
 const CourseItem = (props) => {
-  const [showCourseDetails, setShowMap] = useState(false);
+  const [showCourseDetails, setShowCourseDetails] = useState(false);
 
-  const openProblemsListHandler = () => setShowMap(true);
+  const openProblemsListHandler = () => setShowCourseDetails(true);
 
-  const closeProblemsListHandler = () => setShowMap(false);
+  const closeProblemsListHandler = () => setShowCourseDetails(false);
 
   return (
     <React.Fragment>
@@ -34,35 +30,17 @@ const CourseItem = (props) => {
           </React.Fragment>
         }
       >
-        <div className="map-container">
+        <div className="course-subjects">
           <p>{props.subjects}</p>
         </div>
       </Modal>
 
       <li className="course-item">
-        {/* <Card className="course-item__content">
-          <div className="course-item__info">
-            <div className="course-item__info-item">
-              <h2>{props.name}</h2>
-            </div>
-            <div className="course-item__info-item">
-              <div className="course-item__info-info">
-                <p>10 problems</p>
-                <p>3%</p>
-              </div>
-            </div>
-            <div className="course-item__info-button">
-              <Button inverse onClick={openProblemsListHandler}>
-                <img style={{margin:'auto'}} src={Triangle} alt="Open" />
-              </Button>
-            </div>
-          </div>
-        </Card> */}
-        <button onClick={openProblemsListHandler}>
+        <button onClick={openProblemsListHandler} disabled={props.completion === "100%"}>
           <Card
             className={`course-item__info  ${
               props.all && `course-item__info--all`
-            }  ${props.user && `course-item__info--user`}`}
+            }  ${props.user && (props.completion === "100%" ? `course-item__info--user_disabled` : `course-item__info--user`)}`}
           >
             <h2>{props.name}</h2>
             {props.user && (

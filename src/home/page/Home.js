@@ -16,7 +16,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home-test">
+    <div className="home">
       <li className="home__info">
         <div className="welcome-text">
           <h1>Hey you!</h1>

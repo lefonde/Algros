@@ -22,7 +22,11 @@ const Answer = (props) => {
   const [selectedLanguage, setSelectedLanguage] = useState("java");
 
   const javaTemplate =
-    "public class Solution {public static void main(String[] args) {System.out.println(-321);} }";
+    "public class Solution {\n" +
+    "   public static void main(String[] args) {\n" +
+    "      System.out.println(-321);\n" +
+    "   } \n" +
+    "}";
   const python3Template =
     'using System;class Program{ static void Main() { int x = 10; int y = 25; int z = x + y; Console.Write("Sum of x + y = "+ z); }}';
 
@@ -31,23 +35,9 @@ const Answer = (props) => {
     { id: "python3", value: "python3", label: "python3" },
   ];
 
-  const languageTemplates = [
-    {
-      id: "C#",
-      code: 'using System;class Program{ static void Main() { int x = 10; int y = 25; int z = x + y; Console.Write("Sum of x + y = "+ z); }}',
-    },
-    {
-      id: "java",
-      code: "public class Solution {public static void main(String[] args) {System.out.println(-321);} }",
-    },
-  ];
-
   useEffect(() => {
     setloadedQuestionIndex(props.questionIndex);
   }, [props]);
-
-  const codeString =
-    "public class Solution {public static void main(String[] args) {System.out.println(-321);} }";
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -69,11 +59,11 @@ const Answer = (props) => {
       console.log(
         document.getElementById("answer").value.replace(/(\r\n|\n|\r)/gm, "")
       );
-      
+
       const userId = JSON.parse(
         localStorage.getItem("userData")
       ).userId.toString();
-      
+
       const answerSubmissionResponse = await sendRequest(
         "http://51.138.73.135:8080/Algors/submit",
         "POST",
@@ -87,13 +77,8 @@ const Answer = (props) => {
         }),
         {}
       );
-      console.log(answerSubmissionResponse);
 
-      let submitResultString = `output:${answerSubmissionResponse.output}, memory:${answerSubmissionResponse.memory}, cpu time:${answerSubmissionResponse.cpuTime}`;
-      console.log("answerSubmissionResponse=");
-      console.log(submitResultString);
-
-      let test_SubmissionResults = (
+      let submissionResult = (
         <div>
           {answerSubmissionResponse.error ? (
             <h3 style={{ color: "red" }}>{answerSubmissionResponse.error}</h3>
@@ -107,9 +92,8 @@ const Answer = (props) => {
         </div>
       );
 
-      setLoadedSubmissionResult(test_SubmissionResults);
+      setLoadedSubmissionResult(submissionResult);
     } catch (err) {}
-    console.log(loadedSubmissionResult);
   };
 
   const authSubmitHandler = (event) => {
@@ -127,7 +111,7 @@ const Answer = (props) => {
             element="codearea"
             validators={[VALIDATOR_MINLENGTH(3)]}
             errorText="Please enter a valid code answer"
-            placeholder="test placeholder"
+            placeholder="write your code here"
             onInput={inputHandler}
             language="java"
             initialValue={javaTemplate}
@@ -140,7 +124,7 @@ const Answer = (props) => {
             element="codearea"
             validators={[VALIDATOR_MINLENGTH(3)]}
             errorText="Please enter a valid code answer"
-            placeholder="test placeholder"
+            placeholder="write your code here"
             onInput={inputHandler}
             language="csharp"
             initialValue={python3Template}
@@ -154,29 +138,18 @@ const Answer = (props) => {
             <LoadingSpinner />
           </div>
         )}
-        <Dropdown
-          id="languages-dropdown"
-          placeholder="Select an option"
-          className="language-selector"
-          options={languageOptions}
-          value="java"
-          onChange={(value) => console.log("change!", value)}
-          onSelect={(value) => {
-            // const input = document.getElementById("answer");
-            // input.value = languageTemplates.find(
-            //   (entry) => entry.id === value.value
-            // )
-            //   ? languageTemplates.find((entry) => entry.id === value.value).code
-            //   : "no template";
-            // const event = new Event("text", { bubbles: true });
-            // input.dispatchEvent(event);
-            setSelectedLanguage(value.value)
-          }}
-          onClose={(closedBySelection) =>
-            console.log("closedBySelection?:", closedBySelection)
-          }
-          onOpen={() => console.log("open!")}
-        />
+        <div className="language-selector">
+          <Dropdown
+            id="languages-dropdown"
+            placeholder="Select an option"
+            options={languageOptions}
+            value="java"
+            onSelect={(value) => {
+              setSelectedLanguage(value.value);
+            }}
+          />
+        </div>
+
         <Button
           className="item-relative"
           type="submit"

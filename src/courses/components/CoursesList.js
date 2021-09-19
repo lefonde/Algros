@@ -24,7 +24,6 @@ const CoursesList = (props) => {
           subjects={course.subjects}
           completion={course.courseCompletion}
           questionsAmount={course.questionsAmount}
-          //image={course.image}
           name={course.courseName}
           user={props.user}
           all={props.all}

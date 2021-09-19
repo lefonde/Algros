@@ -1,21 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
-import ScrollArea from "react-scrollbar";
 
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import CoursesList from "../components/CoursesList";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import "./Courses.css";
 
 const Courses = () => {
   const DEBUG = false;
-  const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedAllCourses, setLoadedAllCourses] = useState([]);
+  const [updatedAllCourses, setUpdatedAllCourses] = useState([]);
+
   const [loadedUserCourses, setLoadedUserCourses] = useState([]);
-  let allCourses = [];
+
+  let allCoursesList = [];
+  let userCoursesList = [];
 
   useEffect(() => {
     document.body.style.background = "#ffffff";
@@ -32,7 +33,8 @@ const Courses = () => {
           "http://51.138.73.135:8080/Algors/allCourses"
         );
         setLoadedAllCourses(allCoursesResponse.courses);
-        allCourses = allCoursesResponse.courses;
+        setUpdatedAllCourses(true);
+        //allCoursesList = allCoursesResponse.courses;
       } catch (err) {}
     };
 
@@ -45,8 +47,6 @@ const Courses = () => {
         const userId = JSON.parse(
           localStorage.getItem("userData")
         ).userId.toString();
-        console.log("parsed local storage");
-        console.log(userId);
         const userCoursesResponse = await sendRequest(
           "http://51.138.73.135:8080/Algors/userCourses",
           "POST",
@@ -56,15 +56,11 @@ const Courses = () => {
           {}
         );
 
-        console.log("got user courses");
-        console.log(userCoursesResponse);
-
-        let test = [];
         Object.values(loadedAllCourses).map((currentCourse, idx1) => {
           Object.values(userCoursesResponse.userCourses).map(
             (userCourse, idx2) => {
               if (currentCourse.courseId === userCourse.courseId)
-                test.push({
+                userCoursesList.push({
                   courseId: currentCourse.courseId,
                   courseName: currentCourse.courseName,
                   subjects: currentCourse.subjects,
@@ -79,12 +75,43 @@ const Courses = () => {
           );
         });
 
-        setLoadedUserCourses(test);
+        setLoadedUserCourses(userCoursesList);
+
+        // setLoadedAllCourses((allCourses) =>
+        //   allCourses.filter((course) => {
+        //     userCoursesList.forEach((userCourse) => {
+        //       if (userCourse.courseId === course.courseId) return true;
+        //     });
+
+        //     return false;
+        //   })
+        // );
       } catch (err) {}
     };
 
     fetchUserCourses();
   }, [sendRequest, loadedAllCourses]);
+
+  useEffect(() => {
+    Object.values(loadedAllCourses).map((currentCourse, idx1) => {
+      Object.values(loadedUserCourses).map((userCourse, idx2) => {
+        if (currentCourse.courseId !== userCourse.courseId)
+          allCoursesList.push({
+            courseId: currentCourse.courseId,
+            courseName: currentCourse.courseName,
+            subjects: currentCourse.subjects,
+            questionsAmount: userCourse.questionAmount,
+            courseCompletion: `${parseInt(
+              (userCourse.questionCompletedAmount / userCourse.questionAmount) *
+                100
+            )}%`,
+          });
+      });
+    });
+
+    setUpdatedAllCourses(allCoursesList);
+
+  }, [loadedUserCourses]);
 
   return (
     <React.Fragment>
@@ -108,7 +135,7 @@ const Courses = () => {
         <h1>All Courses</h1>
         {(!isLoading || DEBUG) && (
           <CoursesList
-            items={loadedAllCourses}
+            items={updatedAllCourses}
             className="course-list__list"
             all
           />
