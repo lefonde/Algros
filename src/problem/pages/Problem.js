@@ -38,8 +38,6 @@ const Problem = () => {
       );
       setforumMessages(forumMessagesResponse.messages);
       setLoadedMessages(true);
-      console.log("forum messages index=");
-      console.log(index);
     } catch (err) {}
   };
 
@@ -65,8 +63,7 @@ const Problem = () => {
           }),
           {}
         );
-        console.log("questionsResponse");
-        console.log(questionsResponse);
+
         setloadedQuestions(questionsResponse.questions);
         questionIndex = questionsResponse.firstQuestionIndex;
 
@@ -75,6 +72,7 @@ const Problem = () => {
     };
 
     fetchQuestions();
+
   }, [sendRequest]);
 
   // loading all forum messages for the specific question

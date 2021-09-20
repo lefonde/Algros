@@ -22,26 +22,41 @@ const Home = () => {
           <h1>Hey you!</h1>
           <h2>Lets get ready</h2>
           <h2>for your next career upgrade!</h2>
-          <Button className="create-account" to="/auth">Create account</Button>
+          <Button className="create-account" to="/auth">
+            Create account
+          </Button>
         </div>
         <div className="owl-icon">
           <img src={Owl_SVG} alt="Iconic owl" width="170%" height="170%" />
         </div>
-        <div className="home-computer">
-          <img src={Computer_SVG} alt="Computer" width="170%" height="170%" />
+        <div className="intro">
+          <div className="home-computer">
+            {/* <img src={Computer_SVG} alt="Computer" width="170%" height="170%" /> */}
+            <img src={Computer_SVG} alt="Computer" />
+          </div>
+          <div className="intro-text">
+            <h1>Use our integrated web compiler.</h1>
+            <h1>Submit your code and see if you answer correctly.</h1>
+            <h1>Syntax highlighting helps you structure your answers.</h1>
+          </div>
         </div>
+
         <div className="goodbye-text">
           <h2>Made by: Alex Lefonde and Mor Shaul</h2>
         </div>
-        <div className="with-friends-text">
-          <h2>With a little help from our friends..</h2>
+        <div className="about-buttom">
+          <div className="friends">
+            {/* <img src={Friends} alt="With friends" width="200%" height="200%" /> */}
+            <img src={Friends} alt="With friends" />
+
+          </div>
+          <div className="with-friends-text">
+            <h2>With a little help from our friends..</h2>
+          </div>
         </div>
-        <div className="friends">
-          <img src={Friends} alt="With friends" width="200%" height="200%" />
-        </div>
-        <div className="home-anchor" id= "homeAnchorTag"/>
-        <div className="intro-anchor" id= "introAnchorTag"/>
-        <div className="about-anchor" id= "aboutAnchorTag"/>
+        <div className="home-anchor" id="homeAnchorTag" />
+        <div className="intro-anchor" id="introAnchorTag" />
+        <div className="about-anchor" id="aboutAnchorTag" />
       </li>
     </div>
   );

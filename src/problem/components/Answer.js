@@ -18,17 +18,37 @@ const Answer = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedSubmissionResult, setLoadedSubmissionResult] = useState(" ");
   const [loadedQuestionIndex, setloadedQuestionIndex] = useState(0);
-  const [languageTemplate, setLanguageTemplate] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("java");
 
   const javaTemplate =
-    "public class Solution {\n" +
-    "   public static void main(String[] args) {\n" +
-    "      System.out.println(-321);\n" +
-    "   } \n" +
+    "import java.util.Scanner; \n" +
+    "\n" +
+    "public class Solution { \n" +
+    "	public static void main(String[] args) {\n" +
+    "		Scanner myObj = new Scanner(System.in); \n" +
+    "		<-DATATYPE-> x = // choose of the following based on <-DATATYPE->:\n" +
+    "				 // myObj.nextInt(); \n" +
+    "				 // myObj.nextLine() \n" +
+    "				 // etc...\n" +
+    "				\n" +
+    "		System.out.println(function(x));\n" +
+    "	} \n" +
+    "	\n" +
+    "	public static <-DATATYPE-> function(<-DATATYPE-> x) {\n" +
+    "		// your solution goes here\n" +
+    "	}\n" +
     "}";
   const python3Template =
-    'using System;class Program{ static void Main() { int x = 10; int y = 25; int z = x + y; Console.Write("Sum of x + y = "+ z); }}';
+    "import fileinput\n" +
+    "\n" +
+    "class Solution:\n" +
+    "	for line in fileinput.input():\n" +
+    "		a = <DATATYPE>(line.rstrip())\n" +
+    "		\n" +
+    "	def function(x: <DATATYPE>) -> <DATATYPE>:\n" +
+    "		// your solution goes here\n" +
+    "		\n" +
+    "	print(function(a))";
 
   const languageOptions = [
     { id: "java", value: "java", label: "java" },
@@ -55,11 +75,6 @@ const Answer = (props) => {
 
   const submitQuestion = async () => {
     try {
-      console.log("answer string to send=");
-      console.log(
-        document.getElementById("answer").value.replace(/(\r\n|\n|\r)/gm, "")
-      );
-
       const userId = JSON.parse(
         localStorage.getItem("userData")
       ).userId.toString();

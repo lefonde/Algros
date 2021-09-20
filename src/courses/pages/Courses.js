@@ -93,6 +93,10 @@ const Courses = () => {
   }, [sendRequest, loadedAllCourses]);
 
   useEffect(() => {
+    if(loadedUserCourses.length === 0) {
+      setUpdatedAllCourses(loadedAllCourses);
+      return;
+    }
     Object.values(loadedAllCourses).map((currentCourse, idx1) => {
       Object.values(loadedUserCourses).map((userCourse, idx2) => {
         if (currentCourse.courseId !== userCourse.courseId)

@@ -22,38 +22,7 @@
   font-weight: normal;
   line-height: 169.69%;
   text-align: left;
-  color: #14384F;
-}
-
-.home__modal-content {
-  padding: 0;
-}
-
-.home__modal-actions {
-  text-align: right;
-}
-
-.home__actions button,
-.home__actions a {
-  margin: 0.5rem;
-}
-
-.map-container {
-  height: 15rem;
-  width: 100%;
-}
-
-.patterns-content {
-  position: absolute;
-  z-index: -999;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
- 
-.patterns-container {
-  position: relative;
+  color: #14384f;
 }
 
 @media (min-width: 768px) {
@@ -61,12 +30,28 @@
     height: 20rem;
   }
 }
-
+/* 
 .home-computer {
   position: absolute;
   top: 148vh;
   left: 10vh;
+} */
+
+.intro {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  top: 148vh;
+  left: 10vh;
+  overflow:visible;
 }
+
+/* .intro-text {
+  position: absolute;
+  top: 154vh;
+  right: 25vh;
+} */
 
 .owl-icon {
   position: absolute;
@@ -81,11 +66,11 @@
 }
 
 .welcome-text h1 {
-  font-size:80px;
+  font-size: 80px;
 }
 
 .welcome-text h2 {
-  font-size:60px;
+  font-size: 60px;
 }
 
 .goodbye-text {
@@ -94,18 +79,38 @@
   align-content: center;
 }
 
-.with-friends-text {
+/* 
+.about-buttom {
   position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-evenly;
   top: 368vh;
-  right: 5vh;
+  overflow:visible;
+}
+
+.about-buttom h2 {
+  font-size: 60px;
+} */
+
+.about-buttom img {
+  width: 200%;
+}
+
+.with-friends-text {
+  position: relative;
+  top: 368vh;
+  left: 88vh;
+  background-color: turquoise;
+
 }
 
 .with-friends-text h2 {
-  font-size:50px;
+  font-size: 50px;
 }
 
 .goodbye-text h2 {
-  font-size:60px;
+  font-size: 60px;
 }
 
 .friends {
@@ -118,9 +123,12 @@
   width: 50vh;
   height: 5vh;
   font-size: x-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.home-anchor{
+.home-anchor {
   position: absolute;
   top: 0vh;
 }

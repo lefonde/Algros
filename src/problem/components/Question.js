@@ -126,8 +126,6 @@ const Question = (props) => {
         );
       });
       setLoadedMessages(messages);
-      console.log("messages:");
-      console.log(messages);
     }
   }, [props]);
 
