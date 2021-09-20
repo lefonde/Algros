@@ -34,7 +34,6 @@ const Courses = () => {
         );
         setLoadedAllCourses(allCoursesResponse.courses);
         setUpdatedAllCourses(true);
-        //allCoursesList = allCoursesResponse.courses;
       } catch (err) {}
     };
 
@@ -76,16 +75,6 @@ const Courses = () => {
         });
 
         setLoadedUserCourses(userCoursesList);
-
-        // setLoadedAllCourses((allCourses) =>
-        //   allCourses.filter((course) => {
-        //     userCoursesList.forEach((userCourse) => {
-        //       if (userCourse.courseId === course.courseId) return true;
-        //     });
-
-        //     return false;
-        //   })
-        // );
       } catch (err) {}
     };
 

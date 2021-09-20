@@ -8,8 +8,6 @@
   text-align: center;
   display: flex;
   justify-content: center;
-
-  /* OPTIONAL: Spacing between items */
   margin: 16px 0;
 }
 
@@ -30,12 +28,6 @@
     height: 20rem;
   }
 }
-/* 
-.home-computer {
-  position: absolute;
-  top: 148vh;
-  left: 10vh;
-} */
 
 .intro {
   position: absolute;
@@ -46,12 +38,6 @@
   left: 10vh;
   overflow:visible;
 }
-
-/* .intro-text {
-  position: absolute;
-  top: 154vh;
-  right: 25vh;
-} */
 
 .owl-icon {
   position: absolute;
@@ -79,30 +65,14 @@
   align-content: center;
 }
 
-/* 
-.about-buttom {
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content:space-evenly;
-  top: 368vh;
-  overflow:visible;
-}
-
-.about-buttom h2 {
-  font-size: 60px;
-} */
-
 .about-buttom img {
   width: 200%;
 }
 
 .with-friends-text {
-  position: relative;
+  position: absolute;
   top: 368vh;
-  left: 88vh;
-  background-color: turquoise;
-
+  right: 5vh;
 }
 
 .with-friends-text h2 {
